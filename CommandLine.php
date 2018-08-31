@@ -12,7 +12,7 @@
  *    other formats are ignored or cause an exception is thrown (the behaviour is set in the class' constructor)
  *
  * @author Jacek Ciach <jacek.ciach@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  */
 class CommandLine
 {
@@ -86,7 +86,7 @@ class CommandLine
      * @return mixed|null
      * @throws \InvalidArgumentException
      */
-    public function option(string $optionName, $throwException = false)
+    public function option(string $optionName, bool $throwException = false)
     {
         if (isset($this->options[$optionName])) {
             return $this->options[$optionName];
