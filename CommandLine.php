@@ -8,7 +8,7 @@
  *  - the first non-DASH-ed argument is considered as a `param`, all subsequent arguments are `params` as well,
  *  - the class supports a DASHES-only argument: it works as a break between `options` and `params`,
  *  - if the first argument is not DASH-ed, the `options` will be just empty,
- *  - each DASH-ed argument *MUST* be in format `--`, `--NAME`, `--NAME=` or `--NAME=VALUE`, where `NAME` consists of `[0-9a-z-]`;
+ *  - each DASH-ed argument *MUST* be in format `--`, `--NAME`, `--NAME=` or `--NAME=VALUE`, where `NAME` consists of `[0-9a-z_-]`;
  *    other formats are ignored or cause an exception is thrown (the behaviour is set in the class' constructor)
  *
  * @author Jacek Ciach <jacek.ciach@gmail.com>
