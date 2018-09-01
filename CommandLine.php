@@ -74,8 +74,9 @@ class CommandLine
                 break; // stop the parser: a DASHES only argument has been found
             } elseif (preg_match("/^([\w-]+)(=(.*))?$/", $option, $matches)) { // if the option has the format like NAME=VALUE
                 /*
-                 *  - if the option has format NAME=VALUE, then VALUE is added to the $this->options array with key NAME.
-                 *  - if the option has format NAME or NAME=, then boolean true is added to the $this->options with key NAME
+                 *  - if the option has format NAME=VALUE, VALUE is added to $this->options with key NAME
+                 *  - if the option has format NAME=, an empty string is added to $this->options with key NAME
+                 *  - if the option has format NAME, boolean TRUE is added to $this->options with key NAME
                  */
                 $optionName = $matches[1];
                 if (is_array($allowedOptions) && !in_array($optionName, $allowedOptions)) {
