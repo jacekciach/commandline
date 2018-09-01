@@ -70,7 +70,7 @@ class CommandLine
             }
             ++$dashedArgumentsCount;
 
-            $option = strtolower(substr($rawArgument, strlen(self::DASHES))); // read the part after the DASHES
+            $option = substr($rawArgument, strlen(self::DASHES)); // read the part after the DASHES
             if (empty($option)) { // if the option is just DASHES
                 $this->options[self::DASHES] = true;
                 break; // stop the parser: a DASHES only argument has been found
