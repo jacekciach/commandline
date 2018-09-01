@@ -33,10 +33,12 @@ class CommandLine
     /**
      * Constructs the object and reads all arguments from $argv
      *
-     * @param bool $throwExceptions throw an exception when an `option` has a wrong format
+     * @param bool $throwExceptions throw exceptions instead of ignoring errors
+     * @param array|null $allowedOptions options not included in the array will be ignored / throw an exception
+     * @throws \InvalidArgumentException
      * @throws \UnexpectedValueException
      */
-    public function __construct(bool $throwExceptions = false)
+    public function __construct(bool $throwExceptions = false, array $allowedOptions = null)
     {
         global $argv;
         $rawArguments = array_slice($argv, 1); // skip the script name
@@ -62,6 +64,12 @@ class CommandLine
                  *  - if the option has format NAME or NAME=, then boolean true is added to the $this->options with key NAME
                  */
                 $optionName = $matches[1];
+                if (is_array($allowedOptions) && !in_array($optionName, $allowedOptions)) {
+                    if ($throwExceptions) {
+                        throw new \InvalidArgumentException("Invalid option '$optionName'");
+                    }
+                    continue;
+                }
                 $optionValue = isset($matches[3]) ? $matches[3] : true;
                 $this->options[$optionName] = $optionValue;
             } elseif ($throwExceptions) {
