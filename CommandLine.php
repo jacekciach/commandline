@@ -12,11 +12,26 @@
  *    other formats are ignored or cause an exception is thrown (the behaviour is set in the class' constructor)
  *
  * @author Jacek Ciach <jacek.ciach@gmail.com>
- * @version 1.0.1
+ * @version 1.1.0
  */
 class CommandLine
 {
     const DASHES = "--";
+
+    /**
+     * The option is not allowed
+     */
+    const EXCEPTION_NOT_ALLOWED_OPTION = 1;
+
+    /**
+     * The command line argument has a wrong format
+     */
+    const EXCEPTION_INVALID_ARGUMENT = 2;
+
+    /**
+     * The options does not exist
+     */
+    const EXCEPTION_NONEXISTENT_OPTION = 3;
 
     /**
      * Holds arguments starting with DASHES
@@ -36,7 +51,6 @@ class CommandLine
      * @param bool $throwExceptions throw exceptions instead of ignoring errors
      * @param array|null $allowedOptions options not included in the array will be ignored / throw an exception
      * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
      */
     public function __construct(bool $throwExceptions = false, array $allowedOptions = null)
     {
@@ -66,14 +80,20 @@ class CommandLine
                 $optionName = $matches[1];
                 if (is_array($allowedOptions) && !in_array($optionName, $allowedOptions)) {
                     if ($throwExceptions) {
-                        throw new \InvalidArgumentException("Invalid option '$optionName'");
+                        throw new \InvalidArgumentException(
+                            "Not allowed option '$optionName'",
+                            self::EXCEPTION_NOT_ALLOWED_OPTION
+                        );
                     }
                     continue;
                 }
                 $optionValue = isset($matches[3]) ? $matches[3] : true;
                 $this->options[$optionName] = $optionValue;
             } elseif ($throwExceptions) {
-                throw new \UnexpectedValueException("Invalid argument: $rawArgument");
+                throw new \InvalidArgumentException(
+                    "Invalid argument: $rawArgument",
+                    self::EXCEPTION_INVALID_ARGUMENT
+                );
             }
 
         } // foreach
@@ -99,7 +119,10 @@ class CommandLine
         if (isset($this->options[$optionName])) {
             return $this->options[$optionName];
         } elseif ($throwException) {
-            throw new \InvalidArgumentException("Option '$optionName' does not exist");
+            throw new \InvalidArgumentException(
+                "Option '$optionName' does not exist",
+                self::EXCEPTION_NONEXISTENT_OPTION
+            );
         }
         return null;
     }
