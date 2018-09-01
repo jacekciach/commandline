@@ -12,7 +12,7 @@
  *    other formats are ignored or cause an exception is thrown (the behaviour is set in the class' constructor)
  *
  * @author Jacek Ciach <jacek.ciach@gmail.com>
- * @version 1.1.3
+ * @version 1.2.0
  */
 class CommandLine
 {
@@ -32,6 +32,11 @@ class CommandLine
      * The options does not exist
      */
     const EXCEPTION_NONEXISTENT_OPTION = 3;
+
+    /**
+     * The param does not exits
+     */
+    const EXCEPTION_NONEXISTENT_PARAM = 4;
 
     /**
      * Holds arguments starting with DASHES
@@ -138,6 +143,32 @@ class CommandLine
     public function options(): array
     {
         return $this->options;
+    }
+
+    /**
+     * Returns a param.
+     *
+     * If the param does not exist, returns null or throws an exception.
+     *
+     * @param int $index
+     * @param bool $throwException
+     * @return mixed|null
+     * @throws \InvalidArgumentException
+     */
+    public function param(int $index, bool $throwException = false)
+    {
+        if ($index < 0) {
+            throw new \InvalidArgumentException("Index cannot be lower than 0");
+        }
+        if (isset($this->params[$index])) {
+            return $this->params[$index];
+        } elseif ($throwException) {
+            throw new \InvalidArgumentException(
+                "Param '$index' does not exist",
+                self::EXCEPTION_NONEXISTENT_PARAM
+            );
+        }
+        return null;
     }
 
     /**
