@@ -62,11 +62,13 @@ class CommandLine
          *  The parser stops after an argument consisting of DASHES only or the last DASH-ed one.
          */
         $this->options = array();
+        $dashedArgumentsCount = 0;
         foreach ($rawArguments as $rawArgument) {
 
             if (strncmp($rawArgument, self::DASHES, strlen(self::DASHES)) != 0) { // if the $rawArgument doesn't start with DASHES
                 break; // stop the parser: the argument does not start with DASHES
             }
+            ++$dashedArgumentsCount;
 
             $option = strtolower(substr($rawArgument, strlen(self::DASHES))); // read the part after the DASHES
             if (empty($option)) { // if the option is just DASHES
@@ -102,7 +104,7 @@ class CommandLine
         /*
          * Read all arguments after the last DASH-ed one
          */
-        $this->params = array_slice($rawArguments, count($this->options));
+        $this->params = array_slice($rawArguments, $dashedArgumentsCount);
     }
 
     /**
