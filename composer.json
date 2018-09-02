@@ -1,7 +1,17 @@
 {
-  "name": "jacekciach/CommandLine",
+  "name": "jacekciach/commandline",
+  "type": "library",
+  "keywords": [
+    "commandline",
+    "command line",
+    "simple command line",
+    "commandline parser",
+    "command line parser",
+    "simple command line parser",
+    "cmd",
+    "cli"
+  ],
   "description": "A simple command line parser",
-  "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
     {
