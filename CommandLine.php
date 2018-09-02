@@ -1,5 +1,8 @@
 <?php
 
+namespace CommandLine;
+
+
 /**
  * Class CommandLine - a simple command line arguments parser.
  *
