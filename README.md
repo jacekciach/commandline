@@ -7,10 +7,12 @@ The main idea was to create a class that will not require any configuration.
 A basic usage is to just create a new object and go.
 
 The terms used by the class:
+
  - an `option` is an argument starting with dashes (`--`), i.e. `--start=now`
  - a `param` is an argument not being an `option`
 
 Because the class requires no configuration:
+
  - it accepts only long `options`
  - it won't filter `options`, make them required, optional, etc.
  - it requires `options` to be passed before `params`; if the class encounters the first `param`, all arguments that come after this first `param` will be treated as `params` even if they start with dashes
