@@ -15,7 +15,7 @@ namespace CommandLine;
  *    where `NAME` consists of alphanumeric characters, hyphens or underscores and MUST start with a letter or a digit
  *
  * @author Jacek Ciach <jacek.ciach@gmail.com>
- * @version 1.6.1
+ * @version 1.6.2
  */
 class CommandLine
 {
@@ -60,16 +60,6 @@ class CommandLine
      * @var array
      */
     private $params;
-
-    /**
-     * Returns the value of PHP_BINARY
-     *
-     * @return string
-     */
-    public function binary(): string
-    {
-        return PHP_BINARY;
-    }
 
     /**
      * Constructs the object and reads all arguments from $argv
@@ -150,6 +140,16 @@ class CommandLine
          * Read all arguments after the last DASH-ed one
          */
         $this->params = array_slice($rawArguments, $dashedArgumentsCount);
+    }
+
+    /**
+     * Returns the value of PHP_BINARY
+     *
+     * @return string
+     */
+    public function binary(): string
+    {
+        return PHP_BINARY;
     }
 
     /**
