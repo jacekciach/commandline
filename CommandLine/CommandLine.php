@@ -15,7 +15,7 @@ namespace CommandLine;
  *    other formats are ignored or cause an exception is thrown (the behaviour is set in the class' constructor)
  *
  * @author Jacek Ciach <jacek.ciach@gmail.com>
- * @version 1.2.0
+ * @version 1.3.0
  */
 class CommandLine
 {
@@ -42,6 +42,13 @@ class CommandLine
     const EXCEPTION_NONEXISTENT_PARAM = 4;
 
     /**
+     * Holds the script's name
+     *
+     * @var string
+     */
+    private $script;
+
+    /**
      * Holds arguments starting with DASHES
      * @var array
      */
@@ -63,6 +70,7 @@ class CommandLine
     public function __construct(bool $throwExceptions = false, array $allowedOptions = null)
     {
         global $argv;
+        $this->script = $argv[0];
         $rawArguments = array_slice($argv, 1); // skip the script name
 
         /*
@@ -113,6 +121,26 @@ class CommandLine
          * Read all arguments after the last DASH-ed one
          */
         $this->params = array_slice($rawArguments, $dashedArgumentsCount);
+    }
+
+    /**
+     * Returns the value of PHP_BINARY
+     *
+     * @return string
+     */
+    public function binary(): string
+    {
+        return PHP_BINARY;
+    }
+
+    /**
+     * Returns the script's name
+     *
+     * @return string
+     */
+    public function script(): string
+    {
+        return $this->script;
     }
 
     /**

@@ -152,4 +152,16 @@ class CommandLineTest extends TestCase
         $cmd = new CommandLine();
         $cmd->param(23, true);
     }
+
+    public function testBinary()
+    {
+        $cmd = new CommandLine();
+        $this->assertEquals(PHP_BINARY, $cmd->binary());
+    }
+
+    public function testScript()
+    {
+        $cmd = new CommandLine();
+        $this->assertEquals(self::MOCK_SCRIPT_NAME, $cmd->script());
+    }
 }
