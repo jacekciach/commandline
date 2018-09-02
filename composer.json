@@ -2,19 +2,15 @@
   "name": "jacekciach/commandline",
   "type": "library",
   "keywords": [
-    "commandline",
-    "command line",
-    "simple command line",
-    "commandline parser",
-    "command line parser",
-    "simple command line parser",
     "cmd",
     "cli",
     "cli opt",
     "cli options",
-    "command line options"
+    "command line options",
+    "command-line options",
+    "parser"
   ],
-  "description": "A simple command line parser",
+  "description": "A simple command-line options parser",
   "license": "MIT",
   "authors": [
     {

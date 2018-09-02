@@ -4,22 +4,23 @@ namespace CommandLine;
 
 
 /**
- * Class CommandLine - a simple command line arguments parser.
+ * Class CommandLine - a simple command-line arguments parser.
  *
  * The arguments are read from left to right:
- *  - DASH-ed (`--`) ones are recognized as `options` and are kept as a key-value array,
+ *  - DASH-ed (`-` or `--`) ones are recognized as `options` and are kept as a key-value array,
  *  - the first non-DASH-ed argument is considered as a `param`, all subsequent arguments are `params` as well,
  *  - the class supports a DASHES-only argument: it works as a break between `options` and `params`,
- *  - if the first argument is not DASH-ed, the `options` will be just empty,
- *  - each DASH-ed argument *MUST* be in format `--`, `--NAME`, `--NAME=` or `--NAME=VALUE`, where `NAME` consists of `[0-9a-z_-]`;
- *    other formats are ignored or cause an exception is thrown (the behaviour is set in the class' constructor)
+ *  - short options MUST have the format: `-N`, `-N=` or `-N=VALUE`, where `N` is a letter or a digit,
+ *  - long options MUST have the format: `--`, `--NAME`, `--NAME=` or `--NAME=VALUE`,
+ *    where `NAME` consists of alphanumeric characters, hyphens or underscores and MUST start with a letter or a digit
  *
  * @author Jacek Ciach <jacek.ciach@gmail.com>
- * @version 1.4.5
+ * @version 1.5.0
  */
 class CommandLine
 {
-    const DASHES = "--";
+    const DASH = "-";
+    const DASHES = self::DASH . self::DASH;
 
     /**
      * The option is not allowed
@@ -81,6 +82,14 @@ class CommandLine
         $dashedArgumentsCount = 0;
         foreach ($rawArguments as $rawArgument) {
 
+            /*
+             *  Support for short options.
+             *  A short option is a DASH and then one letter or one digit.
+             */
+            if (preg_match("/^" . preg_quote(self::DASH) . "(\w(=.*)?)$/", $rawArgument, $matches)) {
+                $rawArgument = self::DASHES . $matches[1];
+            }
+
             if (strncmp($rawArgument, self::DASHES, strlen(self::DASHES)) != 0) { // if the $rawArgument doesn't start with DASHES
                 break; // stop the parser: the argument does not start with DASHES
             }
@@ -90,7 +99,7 @@ class CommandLine
             if (empty($option)) { // if the option is just DASHES
                 $this->options[self::DASHES] = true;
                 break; // stop the parser: a DASHES only argument has been found
-            } elseif (preg_match("/^([\w-]+)(=(.*))?$/", $option, $matches)) { // if the option has the format like NAME=VALUE
+            } elseif (preg_match("/^(\w[\w-]*)(=(.*))?$/", $option, $matches)) { // if the option has the format like NAME=VALUE
                 /*
                  *  - if the option has format NAME=VALUE, VALUE is added to $this->options with key NAME
                  *  - if the option has format NAME=, an empty string is added to $this->options with key NAME
@@ -134,7 +143,7 @@ class CommandLine
     }
 
     /**
-     * Returns the script's name
+     * Returns the script's name (same as `$argv[0]`)
      *
      * @return string
      */
