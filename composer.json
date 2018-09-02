@@ -1,0 +1,24 @@
+{
+  "name": "jacekciach/CommandLine",
+  "description": "A simple commandline parser",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "version": "1.2.0",
+  "authors": [
+    {
+      "name": "Jacek Ciach",
+      "email": "jacek.ciach@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "CommandLine\\":"CommandLine"
+    }
+  }
+}
