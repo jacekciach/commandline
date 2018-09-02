@@ -164,4 +164,20 @@ class CommandLineTest extends TestCase
         $cmd = new CommandLine();
         $this->assertEquals(self::MOCK_SCRIPT_NAME, $cmd->script());
     }
+
+    public function testShortOptions()
+    {
+        $this->addMockArguments(array('-v', '-e=', '-o=file1', '-no'));
+        $cmd = new CommandLine();
+        $this->assertEquals(array('v' => true, 'e' => '', 'o' => 'file1'), $cmd->options());
+        $this->assertEquals('-no', $cmd->param(0));
+    }
+
+    public function testShortOptionsMap()
+    {
+        $this->addMockArguments(array('-v', '-o=file1', '-e=', '-no'));
+        $cmd = new CommandLine(false, null, array('o' => 'output'));
+        $this->assertEquals(array('v' => true, 'output' => 'file1', 'e' => ''), $cmd->options());
+        $this->assertEquals('-no', $cmd->param(0));
+    }
 }

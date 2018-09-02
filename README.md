@@ -1,24 +1,25 @@
 # CommandLine
 
-A simple command line parser.
+A simple command-line options parser.
 
 The main idea was to create a class that will not require any configuration.
 
 A basic usage is to just create a new object and go.
 
-The terms used by the class:
+## Description
 
- - an `option` is an argument starting with dashes (`--`), i.e. `--start=now`
- - a `param` is an argument not being an `option`
+The class parses all arguments passed in `$argv`. Parsed arguments are easily accessed with class's methods. These methods are documents in `CommandLine.php`.
 
-Because the class requires no configuration:
+A command-line argument can be either an `option` or a `param`: 
 
- - it accepts only long `options`
- - it won't filter `options`, make them required, optional, etc.
- - it requires `options` to be passed before `params`; if the class encounters the first `param`, all arguments that come after this first `param` will be treated as `params` even if they start with dashes
+ - `options` have to be passed before `params`; when the parser encounters the first `param`, all arguments that come after will be treated as `params` as well
+ - an `option` is an argument starting with a dash `-` (i.e. `-v`, `-4=yes`) or dashes `--` (i.e. `--enabled`, `--start=now`)
+ - `params` start with a first argument not being an `option` 
+ - the class generally won't filter `options`, make them required, optional, etc.
+ - however, the class supports `$allowedOptions` and `$shortOptionsMap` (see the class's `__construct` documentation); they are optional and `CommandLine` works perfectly well without using them    
  
-Please, do not treat these rules as drawbacks: with no configuration come some hard assumptions ;)
-
+ A developer needs to implement a logic connected with parsed arguments (their meaning, correctness, dependencies, etc.). The class will not take care of these things: its purpose is to be a convenient "reader" of `$argv`.
+ 
 ## Installation
 
 ### Requirements
@@ -87,7 +88,6 @@ $ php example2.php --start --msg="Hellow World!" "Test Application" user
 
 ```php
 <?php
-
 require_once __DIR__. '/vendor/autoload.php';
 
 use CommandLine\CommandLine;
