@@ -15,7 +15,7 @@ namespace CommandLine;
  *    other formats are ignored or cause an exception is thrown (the behaviour is set in the class' constructor)
  *
  * @author Jacek Ciach <jacek.ciach@gmail.com>
- * @version 1.4.4
+ * @version 1.4.5
  */
 class CommandLine
 {

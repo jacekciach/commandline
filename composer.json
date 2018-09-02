@@ -9,7 +9,10 @@
     "command line parser",
     "simple command line parser",
     "cmd",
-    "cli"
+    "cli",
+    "cli opt",
+    "cli options",
+    "command line options"
   ],
   "description": "A simple command line parser",
   "license": "MIT",
