@@ -17,7 +17,7 @@ Because the class requires no configuration:
  
 Please, do not treat these rules as drawbacks: with no configuration come some hard assumptions ;)
 
-## Instalation
+## Installation
 
 ### Requirements
 
@@ -63,7 +63,7 @@ will return something like:
 ```
 array (
   'binary' => '/usr/bin/php7.0',
-  'script' => 'test.php',
+  'script' => 'example1.php',
   'options' => 
   array (
     'start' => true,
