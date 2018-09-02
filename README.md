@@ -8,7 +8,7 @@ A basic usage is to just create a new object and go.
 
 ## Description
 
-The class parses all arguments passed in `$argv`. Parsed arguments are easily accessed with class's methods. These methods are documents in `CommandLine.php`.
+The class parses all arguments passed in `$argv`. Parsed arguments are easily accessed with class' methods. These methods are documents in `CommandLine.php`.
 
 A command-line argument can be either an `option` or a `param`: 
 
@@ -16,7 +16,7 @@ A command-line argument can be either an `option` or a `param`:
  - an `option` is an argument starting with a dash `-` (i.e. `-v`, `-4=yes`) or dashes `--` (i.e. `--enabled`, `--start=now`)
  - `params` start with a first argument not being an `option` 
  - the class generally won't filter `options`, make them required, optional, etc.
- - however, the class supports `$allowedOptions` and `$shortOptionsMap` (see the class's `__construct` documentation); they are optional and `CommandLine` works perfectly well without using them    
+ - however, the class supports `$allowedOptions` and `$shortOptionsMap` (see the class' `__construct` documentation); they are optional and `CommandLine` works perfectly well without using them
  
  A developer needs to implement a logic connected with parsed arguments (their meaning, correctness, dependencies, etc.). The class will not take care of these things: its purpose is to be a convenient "reader" of `$argv`.
  

@@ -15,7 +15,7 @@ namespace CommandLine;
  *    where `NAME` consists of alphanumeric characters, hyphens or underscores and MUST start with a letter or a digit
  *
  * @author Jacek Ciach <jacek.ciach@gmail.com>
- * @version 1.6.0
+ * @version 1.6.1
  */
 class CommandLine
 {
