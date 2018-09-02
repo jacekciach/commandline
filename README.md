@@ -1,5 +1,7 @@
 # CommandLine
 
+[![Build Status](https://travis-ci.com/jacekciach/commandline.svg?branch=master)](https://travis-ci.com/jacekciach/commandline)
+
 A simple command-line options parser.
 
 The main idea was to create a class that will not require any configuration.
