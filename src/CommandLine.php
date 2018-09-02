@@ -15,7 +15,7 @@ namespace CommandLine;
  *    where `NAME` consists of alphanumeric characters, hyphens or underscores and MUST start with a letter or a digit
  *
  * @author Jacek Ciach <jacek.ciach@gmail.com>
- * @version 1.5.0
+ * @version 1.6.0
  */
 class CommandLine
 {
@@ -62,13 +62,29 @@ class CommandLine
     private $params;
 
     /**
+     * Returns the value of PHP_BINARY
+     *
+     * @return string
+     */
+    public function binary(): string
+    {
+        return PHP_BINARY;
+    }
+
+    /**
      * Constructs the object and reads all arguments from $argv
      *
      * @param bool $throwExceptions throw exceptions instead of ignoring errors
-     * @param array|null $allowedOptions options not included in the array will be ignored / throw an exception
+     * @param array|null $allowedOptions options not included in the array will be ignored;
+     *                                   `null` disables the feature;
+     * @param array $shortOptionsMap a map between short options (array's keys) and long options (values):
+     *                               each short option listed in the array will be replaced with its long equivalent
      * @throws \InvalidArgumentException
      */
-    public function __construct(bool $throwExceptions = false, array $allowedOptions = null)
+    public function __construct(
+        bool $throwExceptions = false,
+        array $allowedOptions = null,
+        array $shortOptionsMap = array())
     {
         global $argv;
         $this->script = $argv[0];
@@ -86,8 +102,12 @@ class CommandLine
              *  Support for short options.
              *  A short option is a DASH and then one letter or one digit.
              */
-            if (preg_match("/^" . preg_quote(self::DASH) . "(\w(=.*)?)$/", $rawArgument, $matches)) {
-                $rawArgument = self::DASHES . $matches[1];
+            if (preg_match("/^" . preg_quote(self::DASH) . "(\w)(=.*)?$/", $rawArgument, $matches)) {
+                $optionName = $matches[1];
+                if (isset($shortOptionsMap[$optionName])) {
+                    $optionName = $shortOptionsMap[$optionName];
+                }
+                $rawArgument = self::DASHES . $optionName . ($matches[2] ?? null);
             }
 
             if (strncmp($rawArgument, self::DASHES, strlen(self::DASHES)) != 0) { // if the $rawArgument doesn't start with DASHES
@@ -99,7 +119,7 @@ class CommandLine
             if (empty($option)) { // if the option is just DASHES
                 $this->options[self::DASHES] = true;
                 break; // stop the parser: a DASHES only argument has been found
-            } elseif (preg_match("/^(\w[\w-]*)(=(.*))?$/", $option, $matches)) { // if the option has the format like NAME=VALUE
+            } elseif (preg_match("/^(\w[\w-]*)(?:=(.*))?$/", $option, $matches)) { // if the option has the format like NAME=VALUE
                 /*
                  *  - if the option has format NAME=VALUE, VALUE is added to $this->options with key NAME
                  *  - if the option has format NAME=, an empty string is added to $this->options with key NAME
@@ -115,7 +135,7 @@ class CommandLine
                     }
                     continue;
                 }
-                $optionValue = isset($matches[3]) ? $matches[3] : true;
+                $optionValue = $matches[2] ?? true;
                 $this->options[$optionName] = $optionValue;
             } elseif ($throwExceptions) {
                 throw new \InvalidArgumentException(
@@ -130,16 +150,6 @@ class CommandLine
          * Read all arguments after the last DASH-ed one
          */
         $this->params = array_slice($rawArguments, $dashedArgumentsCount);
-    }
-
-    /**
-     * Returns the value of PHP_BINARY
-     *
-     * @return string
-     */
-    public function binary(): string
-    {
-        return PHP_BINARY;
     }
 
     /**

@@ -15,7 +15,8 @@ A command-line argument can be either an `option` or a `param`:
  - `options` have to be passed before `params`; when the parser encounters the first `param`, all arguments that come after will be treated as `params` as well
  - an `option` is an argument starting with a dash `-` (i.e. `-v`, `-4=yes`) or dashes `--` (i.e. `--enabled`, `--start=now`)
  - `params` start with a first argument not being an `option` 
- - the class won't filter `options`, make them required, optional, etc. 
+ - the class generally won't filter `options`, make them required, optional, etc.
+ - however, the class supports `$allowedOptions` and `$shortOptionsMap` (see the class's `__construct` documentation); they are optional and `CommandLine` works perfectly well without using them    
  
  A developer needs to implement a logic connected with parsed arguments (their meaning, correctness, dependencies, etc.). The class will not take care of these things: its purpose is to be a convenient "reader" of `$argv`.
  
@@ -87,7 +88,6 @@ $ php example2.php --start --msg="Hellow World!" "Test Application" user
 
 ```php
 <?php
-
 require_once __DIR__. '/vendor/autoload.php';
 
 use CommandLine\CommandLine;
